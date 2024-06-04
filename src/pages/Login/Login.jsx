@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const Login = () => {
-    const { signInUser } = useContext(AuthContext);
+    const { signInUser, googleLogin, githubLogin,  } = useContext(AuthContext);
 
     const { register, handleSubmit, formState: { errors }, } = useForm()
 
@@ -18,6 +19,23 @@ const Login = () => {
         })
         .catch(error => {
             console.log(error.message);
+            if(error){
+                toast.error("Email or password didn't matched with registered account.")
+            }
+        })
+    }
+    const handleGoogleLogin = () =>{
+        googleLogin()
+        .then(result => {
+            console.log(result.user);
+            toast.success("Logged in successfully using google.")
+        })
+    }
+    const handleGithubLogin = () =>{
+        githubLogin()
+        .then(result => {
+            console.log(result.user);
+            toast.success("Logged in successfully using github.")
         })
     }
     return (
@@ -46,9 +64,18 @@ const Login = () => {
                 </div>
             </form>
             <p className='text-center'>Don't have an account? <Link to='/register' className='text-blue-600 font-bold'>Register</Link></p>
+            <div className="divider">OR</div>
             {/* social login part */}
-            <div>
-                
+            <div >
+                <p className='text-center'>Login using social account.</p>
+                <div className='flex gap-4 justify-center mt-4'>
+                    <button onClick={handleGoogleLogin} className='btn  btn-outline text-xl flex gap-2 items-center'>
+                        <FaGoogle></FaGoogle> Google
+                    </button>
+                    <button onClick={handleGithubLogin} className='btn  btn-outline text-xl flex gap-2 items-center'>
+                        <FaGithub></FaGithub> Github
+                    </button>
+                </div>
             </div>
         </div>
     );
