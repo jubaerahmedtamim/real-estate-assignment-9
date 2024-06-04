@@ -1,22 +1,42 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../provider/AuthProvider';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 const Login = () => {
+    const { signInUser } = useContext(AuthContext);
+
+    const { register, handleSubmit, formState: { errors }, } = useForm()
+
+    const onSubmit = (data) => {
+        const { email, password, } = data;
+        signInUser(email,password)
+        .then(result => {
+            console.log(result.user);
+            toast.success("You have successfully logged in.")
+        })
+        .catch(error => {
+            console.log(error.message);
+        })
+    }
     return (
         <div className='my-6 max-w-lg mx-auto'> 
             <h3 className='text-4xl font-semibold text-center'>Please Login</h3>
-            <form className="card-body">
+            <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Email</span>
                     </label>
-                    <input type="email" placeholder="email" className="input input-bordered" required />
+                    <input {...register("email", { required: true })} type="email" placeholder="email" className="input input-bordered"  />
+                    {errors.email && <span className='text-red-600 text-sm'>This field is required</span>}
                 </div>
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Password</span>
                     </label>
-                    <input type="password" placeholder="password" className="input input-bordered" required />
+                    <input {...register("password", { required: true })} type="password" placeholder="password" className="input input-bordered"  />
+                    {errors.password && <span className='text-red-600 text-sm'>This field is required</span>}
                     <label className="label">
                         <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                     </label>
@@ -26,6 +46,10 @@ const Login = () => {
                 </div>
             </form>
             <p className='text-center'>Don't have an account? <Link to='/register' className='text-blue-600 font-bold'>Register</Link></p>
+            {/* social login part */}
+            <div>
+                
+            </div>
         </div>
     );
 };
