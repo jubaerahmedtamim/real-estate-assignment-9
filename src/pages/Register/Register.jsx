@@ -5,27 +5,33 @@ import { AuthContext } from '../../provider/AuthProvider';
 import { toast } from 'react-toastify';
 
 const Register = () => {
-    const { createUser } = useContext(AuthContext);
+    const { createUser, updateUserInfo } = useContext(AuthContext);
     const navigate = useNavigate()
 
     const { register, handleSubmit, formState: { errors }, } = useForm()
 
     const onSubmit = (data) => {
         const { email, password, name, image_url } = data;
-        if(!/^(?=.*[A-Z])(?=.*[a-z]).{6,}$/.test(password)){
+        if (!/^(?=.*[A-Z])(?=.*[a-z]).{6,}$/.test(password)) {
             return toast.error("A minimum 6 characters password contains a combination of uppercase and lowercase letter required");
         }
-        createUser(email,password,name,image_url)
-        .then(result => {
-            console.log(result.user);
-            if(result.user){
-              navigate('/login')  
-            }
-            toast.success("Thanks for registration. Your account has been created successfully.")
-        })
-        .catch(error => {
-            console.log(error.message);
-        })
+        createUser(email, password)
+            .then(result => {
+                updateUserInfo(name, image_url)
+                    .then(() => {
+                        console.log(result.user);
+                        if (result.user) {
+                            navigate('/')
+                        }
+                        toast.success("Thanks for registration. Your account has been created successfully.")
+                    })
+                    .catch((error) => {
+                        console.log(error.message);
+                    });
+            })
+            .catch(error => {
+                console.log(error.message);
+            })
     }
 
     return (
@@ -36,7 +42,8 @@ const Register = () => {
                     <label className="label">
                         <span className="label-text">Name</span>
                     </label>
-                    <input {...register("name", { required: false })} type="text" placeholder="name" className="input input-bordered"  />
+                    <input {...register("name", { required: true })} type="text" placeholder="name" className="input input-bordered" />
+                    {errors.email && <span className='text-red-600 text-sm'>This field is required</span>}
                 </div>
                 <div className="form-control">
                     <label className="label">

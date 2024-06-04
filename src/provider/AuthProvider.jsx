@@ -14,36 +14,42 @@ const AuthProvider = ({ children }) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password, name);
     }
-    const signInUser = (email, password) =>{
+    const signInUser = (email, password) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
-    } 
-    
-    const googleLogin = () =>{
-        setLoading(true);
-        return signInWithPopup(auth,googleProvider);
-    }
-    const githubLogin = () =>{
-        setLoading(true);
-        return signInWithPopup(auth,githubProvider);
     }
 
-    const logOut = () =>{
+    const googleLogin = () => {
+        setLoading(true);
+        return signInWithPopup(auth, googleProvider);
+    }
+    const githubLogin = () => {
+        setLoading(true);
+        return signInWithPopup(auth, githubProvider);
+    }
+
+    const updateUserInfo = (name, image_url) => {
+        return updateProfile(auth.currentUser, {
+            displayName: name, photoURL: image_url
+        });
+    }
+
+    const logOut = () => {
         return signOut(auth);
     }
 
-    useEffect(()=>{
-        const unSubscribe = onAuthStateChanged(auth,(currentUser)=>{
-            if(currentUser){
+    useEffect(() => {
+        const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+            if (currentUser) {
                 setLoading(false);
                 setUser(currentUser);
             }
-            else{
+            else {
                 console.log("user is signout");
             }
         })
-        return ()=>unSubscribe();
-    },[])
+        return () => unSubscribe();
+    }, [])
 
     const authInfo = {
         user,
@@ -52,9 +58,10 @@ const AuthProvider = ({ children }) => {
         signInUser,
         googleLogin,
         githubLogin,
+        updateUserInfo,
         logOut,
         setUser,
-        
+
     }
     return (
         <AuthContext.Provider value={authInfo}>
