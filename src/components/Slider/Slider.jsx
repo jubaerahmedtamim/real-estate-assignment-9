@@ -7,9 +7,9 @@ import slides from '../../../public/slider.json'
 
 const Slider = () => {
     return (
-        <div>
+        <div className='mb-6'>
             <Swiper
-            className='h-[700px]'
+                className='lg:h-[700px] rounded-xl'
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
                 spaceBetween={50}
                 slidesPerView={1}
@@ -19,7 +19,7 @@ const Slider = () => {
                 onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => console.log(swiper)}
             >
-                {slides.map(slide =><SwiperSlide key={slide.id}><img style={{height:"700px", width: "100%" }} src={slide.image_url} alt={slide.title}></img></SwiperSlide>)}
+                {slides.map(slide =><SwiperSlide key={slide.id}><img src={slide.image_url} alt={slide.title}></img></SwiperSlide>)}
                 
             </Swiper>
         </div>
