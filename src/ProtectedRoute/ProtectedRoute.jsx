@@ -6,6 +6,7 @@ const ProtectedRoute = ({children}) => {
     const {user} = useContext(AuthContext);
     const location = useLocation();
     const from = location.pathname;
+    console.log(location);
     if(user){
         return children;
     }

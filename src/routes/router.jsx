@@ -36,11 +36,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/update-profile',
-                element: <UpdateProfile></UpdateProfile>,
+                element: <ProtectedRoute><UpdateProfile></UpdateProfile></ProtectedRoute> ,
             },
             {
                 path: '/user-profile',
-                element: <UserProfile></UserProfile>,
+                element: <ProtectedRoute><UserProfile></UserProfile></ProtectedRoute>  ,
             },
         ]
     }
