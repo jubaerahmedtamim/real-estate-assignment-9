@@ -1,5 +1,7 @@
+import { limit } from 'firebase/firestore';
 import React from 'react';
 import { BiArea } from 'react-icons/bi';
+import { FaParking } from 'react-icons/fa';
 import { FaBackward } from 'react-icons/fa6';
 import { TbCategory, TbCoinTaka, TbCurrentLocation } from 'react-icons/tb';
 import { Link, useLoaderData, useParams } from 'react-router-dom';
@@ -30,12 +32,23 @@ const PropertyDetails = () => {
                     <p className='flex items-center gap-2'><TbCurrentLocation /> <span>{location}</span></p>
                     <p className='flex items-center gap-2'><BiArea /> <span>{area}</span></p>
                 </div>
-                <Link to='/'><button className='btn text-white btn-primary'> <FaBackward></FaBackward> Back to Home</button></Link>
+                <div className='text-center'>
+                    <h1 className='text-2xl mb-4'>Facilities</h1>
+                    <ul className='flex justify-around  '>
+                    {
+                        facilities.map(facility => <li className='border-4 border-double px-4 py-2 rounded-lg text-sm font-semibold' >{facility}</li>)
+                    }
+                    </ul>
+                </div>
+                <Link to='/'><button className='btn text-white btn-primary mt-4'> <FaBackward></FaBackward> Back to Home</button></Link>
             </div>
             <div>
-                <h2 className="text-3xl text-center">Spacial Facilities.</h2>
+                <h2 className="text-3xl text-center">Spacial</h2>
                 <div>
-                    
+                    <div className='text-'>
+                        <FaParking></FaParking>
+                        <span>Parking</span>
+                    </div>
                 </div>
             </div>
         </div>

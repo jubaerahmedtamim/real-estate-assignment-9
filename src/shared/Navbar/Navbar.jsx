@@ -20,9 +20,9 @@ const Navbar = () => {
     }
 
     const navLinks = <>
-        <li><NavLink to='/'>Home</NavLink></li>
-        {/* <li><NavLink to='/login'>Login</NavLink></li>
-        <li><NavLink to='/register'>Register</NavLink></li> */}
+        <li ><NavLink to='/'>Home</NavLink></li>
+        <li><NavLink to='/update-profile'>Update Profile</NavLink></li>
+        <li><NavLink to='/user-profile'>User Profile</NavLink></li>
     </>
     return (
         <div className="navbar bg-base-100">
@@ -44,13 +44,13 @@ const Navbar = () => {
                     {navLinks}
                 </ul>
             </div>
-            <div className="navbar-end">
+            <div className="navbar-end tooltip tooltip-bottom"  data-tip={user?.displayName || "Not available"}>
                 {
                     user
                         ? <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                <div className="w-10 rounded-full">
-                                    <img alt="user profile picture" src={user?.photoURL ? user.photoURL : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"} />
+                                <div className="w-10  rounded-full" >
+                                    <img alt="user profile picture" src={user?.photoURL && user.photoURL || ""} />
                                 </div>
                             </div>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[10] p-2 shadow bg-base-100 rounded-box w-52">

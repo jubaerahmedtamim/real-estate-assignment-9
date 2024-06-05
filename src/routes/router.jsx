@@ -5,6 +5,9 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import NotFound from "../pages/404NotFound/NotFound";
 import PropertyDetails from "../pages/PropertyDetails/PropertyDetails";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import UserProfile from "../pages/UserProfile/UserProfile";
+import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 
 
 export const router = createBrowserRouter([
@@ -20,7 +23,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/property-details/:id',
-                element: <PropertyDetails></PropertyDetails>,
+                element: <ProtectedRoute><PropertyDetails></PropertyDetails></ProtectedRoute>,
                 loader:() => fetch('/public/residence.json'),
             },
             {
@@ -30,6 +33,14 @@ export const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register></Register>,
+            },
+            {
+                path: '/update-profile',
+                element: <UpdateProfile></UpdateProfile>,
+            },
+            {
+                path: '/user-profile',
+                element: <UserProfile></UserProfile>,
             },
         ]
     }
