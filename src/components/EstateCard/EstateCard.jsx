@@ -6,7 +6,10 @@ import { Link } from 'react-router-dom';
 const EstateCard = ({ data }) => {
     const { estate_title, segment_name, description, area, location, price, status, facilities, id } = data;
     return (
-        <div className="card bg-base-100 shadow-xl">
+        <div className="card bg-base-100 shadow-xl"
+            data-aos="fade-right"
+            data-aos-duration="1000"
+        >
             <figure>
                 <img className='relative' src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="image" />
                 <div className="absolute top-5 right-5 text-white font-semibold badge badge-secondary">{status}</div>
